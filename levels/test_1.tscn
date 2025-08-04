@@ -1,0 +1,117 @@
+[gd_scene load_steps=14 format=3 uid="uid://b41h7prm0ruke"]
+
+[sub_resource type="Sky" id="Sky_6xmxd"]
+
+[sub_resource type="Environment" id="Environment_e1g5o"]
+background_mode = 2
+sky = SubResource("Sky_6xmxd")
+ambient_light_source = 3
+ambient_light_color = Color(0.587035, 0.722509, 1, 1)
+reflected_light_source = 2
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+glow_enabled = true
+fog_enabled = true
+fog_density = 0.001
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+adjustment_enabled = true
+adjustment_brightness = 1.59
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tcf2h"]
+load_path = "res://.godot/imported/texture_01.png-02d5761e913636036863da9b5e68d1e1.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5loq5"]
+albedo_texture = SubResource("CompressedTexture2D_tcf2h")
+
+[sub_resource type="BoxMesh" id="BoxMesh_4717r"]
+
+[sub_resource type="MeshTexture" id="MeshTexture_6e2ue"]
+mesh = SubResource("BoxMesh_4717r")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mmdvd"]
+metallic = 0.41
+backlight_texture = SubResource("MeshTexture_6e2ue")
+
+[sub_resource type="BoxMesh" id="BoxMesh_nyfcy"]
+material = SubResource("StandardMaterial3D_mmdvd")
+size = Vector3(50, 0.5, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yg6da"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qpgdx"]
+albedo_texture = SubResource("CompressedTexture2D_tcf2h")
+
+[sub_resource type="BoxMesh" id="BoxMesh_5hqrx"]
+
+[sub_resource type="Curve3D" id="Curve3D_xpkl2"]
+_data = {
+"points": PackedVector3Array(-0.649208, 39.5643, 0, 0.649208, -39.5643, 0, 0.000289917, 0.000146389, 0, 0, 0, 0, 0, 0, 0, 27.0916, -36.5215, -0.283787, 2.39065, -17.9661, 0, -2.39065, 17.9661, 0, 51.795, -17.9033, -0.236607),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4adms"]
+albedo_texture = SubResource("CompressedTexture2D_tcf2h")
+
+[node name="Test1" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_e1g5o")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.161604, -0.263726, 0.950964, 0, 0.96363, 0.267238, -0.986856, 0.0431868, -0.155726, 0, 0, 0)
+
+[node name="Level" type="Node3D" parent="."]
+
+[node name="Plane" type="CSGMesh3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.477374, 0.114501, -0.338899)
+material_override = SubResource("StandardMaterial3D_5loq5")
+use_collision = true
+mesh = SubResource("BoxMesh_nyfcy")
+material = SubResource("StandardMaterial3D_yg6da")
+
+[node name="Box" type="CSGMesh3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.46299, 1.0458, -7.28922)
+material_override = SubResource("StandardMaterial3D_qpgdx")
+use_collision = true
+mesh = SubResource("BoxMesh_5hqrx")
+
+[node name="Path3D" type="Path3D" parent="Level"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 24.5248, 0.365767, 0)
+curve = SubResource("Curve3D_xpkl2")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Level/Path3D"]
+material_override = SubResource("StandardMaterial3D_4adms")
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0.5, 1, 1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="Box2" type="CSGMesh3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.81075, 0.795375, -7.28922)
+material_override = SubResource("StandardMaterial3D_qpgdx")
+use_collision = true
+mesh = SubResource("BoxMesh_5hqrx")
+
+[node name="Box3" type="CSGMesh3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0770075, 2.53323, -7.28922)
+material_override = SubResource("StandardMaterial3D_qpgdx")
+use_collision = true
+mesh = SubResource("BoxMesh_5hqrx")
+
+[node name="SpawnPoints" type="Node3D" parent="."]
+
+[node name="Default" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
