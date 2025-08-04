@@ -1,12 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://b41h7prm0ruke"]
+[gd_scene load_steps=16 format=3 uid="uid://b41h7prm0ruke"]
 
 [ext_resource type="PackedScene" uid="uid://dfh5ii3v2ogu1" path="res://character/character.tscn" id="1_6xmxd"]
 [ext_resource type="Script" uid="uid://c24q3g747qrnj" path="res://world/world.gd" id="1_tcf2h"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_6xmxd"]
-size = Vector3(200, 0.5, 200)
-
-[sub_resource type="BoxMesh" id="BoxMesh_tcf2h"]
 
 [sub_resource type="Sky" id="Sky_6xmxd"]
 
@@ -28,23 +23,85 @@ volumetric_fog_density = 0.01
 adjustment_enabled = true
 adjustment_brightness = 1.59
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tcf2h"]
+load_path = "res://.godot/imported/texture_01.png-02d5761e913636036863da9b5e68d1e1.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4717r"]
+albedo_texture = SubResource("CompressedTexture2D_tcf2h")
+
+[sub_resource type="BoxMesh" id="BoxMesh_4717r"]
+
+[sub_resource type="MeshTexture" id="MeshTexture_h5o24"]
+mesh = SubResource("BoxMesh_4717r")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mmdvd"]
+metallic = 0.41
+backlight_texture = SubResource("MeshTexture_h5o24")
+
+[sub_resource type="BoxMesh" id="BoxMesh_6xmxd"]
+material = SubResource("StandardMaterial3D_mmdvd")
+size = Vector3(50, 0.5, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcf2h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h5o24"]
+albedo_texture = SubResource("CompressedTexture2D_tcf2h")
+
+[sub_resource type="BoxMesh" id="BoxMesh_tcf2h"]
+
+[sub_resource type="Curve3D" id="Curve3D_tcf2h"]
+_data = {
+"points": PackedVector3Array(-0.649208, 39.5643, 0, 0.649208, -39.5643, 0, 0.000289917, 0.000146389, 0, 0, 0, 0, 0, 0, 0, 27.0916, -36.5215, -0.283787, 2.39065, -17.9661, 0, -2.39065, 17.9661, 0, 51.795, -17.9033, -0.236607),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fn3g3"]
+albedo_texture = SubResource("CompressedTexture2D_tcf2h")
+
 [node name="World" type="Node3D"]
 script = ExtResource("1_tcf2h")
-
-[node name="Plane" type="CSGMesh3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0604312, 0.0235302, 0.00314951)
-use_collision = true
-mesh = SubResource("BoxMesh_6xmxd")
-
-[node name="Box" type="CSGMesh3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0770075, 2.53323, -7.28922)
-use_collision = true
-mesh = SubResource("BoxMesh_tcf2h")
-
-[node name="CharacterBody3D" parent="." instance=ExtResource("1_6xmxd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.057435, 2.70303, -3.88699)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tcf2h")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.161604, -0.263726, 0.950964, 0, 0.96363, 0.267238, -0.986856, 0.0431868, -0.155726, 0, 0, 0)
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("1_6xmxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.057435, 2.70303, -3.88699)
+
+[node name="Level" type="Node3D" parent="."]
+
+[node name="Plane" type="CSGMesh3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.477374, 0.114501, -0.338899)
+material_override = SubResource("StandardMaterial3D_4717r")
+use_collision = true
+mesh = SubResource("BoxMesh_6xmxd")
+material = SubResource("StandardMaterial3D_tcf2h")
+
+[node name="Box" type="CSGMesh3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0770075, 2.53323, -7.28922)
+material_override = SubResource("StandardMaterial3D_h5o24")
+use_collision = true
+mesh = SubResource("BoxMesh_tcf2h")
+
+[node name="Path3D" type="Path3D" parent="Level"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 24.5248, 0.365767, 0)
+curve = SubResource("Curve3D_tcf2h")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Level/Path3D"]
+material_override = SubResource("StandardMaterial3D_fn3g3")
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0.5, 1, 1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
