@@ -44,12 +44,28 @@ func _unhandled_input(event: InputEvent) -> void:
 			%Camera3D.rotate_x(-event.relative.y * look_sensitivity)
 			$%Camera3D.rotation.x = clamp(%Camera3D.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
+func clip_velocity(normal: Vector3, overbounce : float, delta : float) -> void:
+	var backoff := self.velocity.dot(normal) * overbounce # old source collision push
+	if backoff >= 0: return
+	var change := normal * backoff
+	self.velocity -= change
+	var adjust := self.velocity.dot(normal)
+	if adjust < 0.0:
+		self.velocity -= normal * adjust
+
+func is_surface_too_steep(normal : Vector3) -> bool:
+	var max_slope_angle_dot = Vector3(0,1,0).rotated(Vector3(1.0,0,0), self.floor_max_angle).dot(Vector3(0,1,1))
+	if normal.dot(Vector3(0,1,0)) < max_slope_angle_dot:
+		return true
+	return false
+	
 func _handle_ground_physics(delta) -> void:
 	var current_speed_in_wish_dir = self.velocity.dot(wish_dir)
 	var add_speed_till_cap = get_move_speed() - current_speed_in_wish_dir
 	if add_speed_till_cap > 0:
 		var accel_speed = ground_accel * delta * get_move_speed()
 		accel_speed = min(accel_speed, add_speed_till_cap)
+		self.velocity += accel_speed * wish_dir
 	#friction
 	var control = max(self.velocity.length(), ground_decel)
 	var drop = control * ground_friction * delta
@@ -69,6 +85,12 @@ func _handle_air_physics(delta) -> void:
 		var accel_speed = air_accel * air_move_speed * delta
 		accel_speed = min(accel_speed, add_speed_till_cap)
 		self.velocity += accel_speed * wish_dir
+	if is_on_wall():
+		if is_surface_too_steep(get_wall_normal()):
+			self.motion_mode = CharacterBody3D.MOTION_MODE_FLOATING
+		else:
+			self.motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
+		clip_velocity(get_wall_normal(), 1, delta) # surfs up
 
 func _physics_process(delta):
 	var input_dir = Input.get_vector("left", "right", "forward", "back").normalized()
