@@ -20,8 +20,20 @@ mesh = SubResource("CapsuleMesh_jldtq")
 
 [node name="Head" type="Node3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.604489, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="Camera3D" type="Camera3D" parent="Head"]
+[node name="CameraSmooth" type="Node3D" parent="Head"]
+unique_name_in_owner = true
+
+[node name="Camera3D" type="Camera3D" parent="Head/CameraSmooth"]
 unique_name_in_owner = true
 cull_mask = 1048573
+
+[node name="StairsAheadRaycast3D" type="RayCast3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00651762, -0.829945)
+
+[node name="StairsBelowRayCast3D" type="RayCast3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0024, 0)
+target_position = Vector3(0, -0.75, 0)

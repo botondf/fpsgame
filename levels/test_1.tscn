@@ -48,7 +48,7 @@ albedo_texture = SubResource("CompressedTexture2D_tcf2h")
 
 [sub_resource type="Curve3D" id="Curve3D_xpkl2"]
 _data = {
-"points": PackedVector3Array(-0.649208, 39.5643, 0, 0.649208, -39.5643, 0, 0.000289917, 0.000146389, 0, 0, 0, 0, 0, 0, 0, 27.0916, -36.5215, -0.283787, 2.39065, -17.9661, 0, -2.39065, 17.9661, 0, 51.795, -17.9033, -0.236607),
+"points": PackedVector3Array(-0.0432234, 12.5837, 0, 0.0432234, -12.5837, 0, 0.000289917, 0.000146389, 0, 0, 0, 0, 0, 0, 0, 34.9365, -16.551, -0.283789, -5.74269, -18.9118, 0, 5.74269, 18.9118, 0, 60.5722, 1.86191, -0.236597),
 "tilts": PackedFloat32Array(0, 0, 0)
 }
 point_count = 3
@@ -84,6 +84,7 @@ transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 24.5248, 0.365767, 0)
 curve = SubResource("Curve3D_xpkl2")
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="Level/Path3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.831173, 3.8743e-07, 2.16893)
 material_override = SubResource("StandardMaterial3D_4adms")
 use_collision = true
 polygon = PackedVector2Array(0, 0, 0.5, 1, 1, 0)
@@ -100,16 +101,67 @@ path_u_distance = 1.0
 path_joined = false
 
 [node name="Box2" type="CSGMesh3D" parent="Level"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.81075, 0.795375, -7.28922)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38812, 1.00403, -7.78166)
 material_override = SubResource("StandardMaterial3D_qpgdx")
 use_collision = true
 mesh = SubResource("BoxMesh_5hqrx")
 
 [node name="Box3" type="CSGMesh3D" parent="Level"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0770075, 2.53323, -7.28922)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0656137, 2.54914, -7.26872)
 material_override = SubResource("StandardMaterial3D_qpgdx")
 use_collision = true
 mesh = SubResource("BoxMesh_5hqrx")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00235748, 3.42965, 16.3514)
+use_collision = true
+radius = 1.65967
+height = 6.15552
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00235748, 3.39838, 12.211)
+use_collision = true
+radius = 1.65967
+height = 6.15552
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0783, 2.32645, 15.3407)
+use_collision = true
+size = Vector3(7.11145, 5.62903, 6.55701)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0783, 4.35089, 3.03638)
+use_collision = true
+size = Vector3(7.11145, 9.67792, 9.20233)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.0931, 2.44868, -16.2557)
+use_collision = true
+size = Vector3(11.2372, 5.24248, 11.2481)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.50217, 1.49986, -13.5027)
+use_collision = true
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -13)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 2, 2, 0, 1, 0)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.45129, 0.562486, -8.88705)
+use_collision = true
+size = Vector3(1, 0.30603, 3)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.39394, 0.713917, -8.88761)
+use_collision = true
+size = Vector3(1, 0.619995, 3)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.39273, 0.886288, -8.88761)
+use_collision = true
+size = Vector3(1, 1.06277, 3)
 
 [node name="SpawnPoints" type="Node3D" parent="."]
 
